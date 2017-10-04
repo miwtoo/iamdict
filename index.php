@@ -185,7 +185,7 @@
     <div id="logged">
     	<header>
         	<div class="logo">
-            	<a href="http://www.iamdict.com">
+            	<a href="<?php $_SERVER['SERVER_NAME']; ?>">
                 	<i class="sprites"></i>
                     <span>IamDict</span>
                 </a>
