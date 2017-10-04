@@ -1,0 +1,27 @@
+<div class="form edit-word">
+    <div class="input" id="input-of-word">
+        <span class="label">คำศัพท์ : </span>
+        <input type="text" class="text" onkeyup="refresh_input( this );">
+        <span class="display-msg-wrong">a-z only and do can't use spaces ' '</span>
+    </div>
+    <div class="input" id="input-of-translate">
+        <span class="label">คำแปล : </span>
+        <div class="field">
+            <div class="list">
+                <input type="text" class="text">
+            </div>
+        </div>
+        <button class="add" onClick="click_addField('translate')">+</button>
+    </div>
+    <div class="input" id="input-of-sentence">
+        <span class="label">แต่งประโยค : <spa></span></span>
+        <div class="field">
+            <div class="list">
+                <input type="text" class="text">
+            </div>
+        </div>
+        <button class="add" onClick="click_addField('sentence')">+</button>
+    </div>
+    <button class="cancel" onClick="click_cancel_editWord()">Cancel</button>
+    <button class="save" onClick="click_editWord()">Save</button>
+</div>

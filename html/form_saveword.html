@@ -1,0 +1,26 @@
+<div class="form">
+    <div class="input" id="input-of-word">
+        <span class="label">คำศัพท์ : </span>
+        <input type="text" class="text" onkeyup="refresh_input( this );" onChange="chkWord( this );" tabindex="1">
+        <span class="display-msg-wrong"></span>
+    </div>
+    <div class="input" id="input-of-translate">
+        <span class="label">คำแปล : </span>
+        <div class="field">
+            <div class="list">
+                <input type="text" class="text" tabindex="2">
+            </div>
+        </div>
+        <button class="add" onClick="click_addField('translate')">+</button>
+    </div>
+    <div class="input" id="input-of-sentence">
+        <span class="label">แต่งประโยค : <spa></span></span>
+        <div class="field">
+            <div class="list">
+                <input type="text" class="text" tabindex="3">
+            </div>
+        </div>
+        <button class="add" onClick="click_addField('sentence')">+</button>
+    </div>
+    <button class="save" onClick="click_saveWord()">เพิ่ม</button>
+</div>

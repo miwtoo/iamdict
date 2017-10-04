@@ -1,0 +1,48 @@
+/* slider plugin */
+html, body {
+	overflow: hidden;
+}
+.jQ-slider-fullScreen-menuRight {
+	position: fixed;
+	top: 0;
+	right: 12px;
+	margin: 0;
+	padding: 0;
+}
+.jQ-slider-fullScreen-menuRight li {
+	width: auto;
+	height: 24px;
+	font-size: 15px;
+	color: #A67C52;
+	list-style: none;
+	opacity: .4;
+	cursor: pointer;
+	text-align: right;
+	margin-bottom: 5px;
+
+	-webkit-transition: all .2s ease;
+	-moz-transition: all .2s ease;
+	-ms-transition: all .2s ease;
+	-o-transition: all .2s ease;
+}
+.jQ-slider-fullScreen-menuRight li:last-of-type {
+	margin-bottom: 0;
+}
+.jQ-slider-fullScreen-menuRight li:hover {
+	opacity: 1;
+}
+.jQ-slider-fullScreen-menuRight li.active {
+	opacity: 1;
+}
+.jQ-slider-fullScreen-menuRight li span {
+	float: right;
+}
+.silderChai-icon {
+	width: 14px;
+	height: 14px;
+	float: right;
+	background: url(icon-silderChai.png);
+	position: relative;
+	top: 4px;
+	margin-left: 10px;
+}

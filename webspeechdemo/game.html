@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Game Speak Englisgh By Web Speech API</title>
+
+<script>
+	// Test browser support
+	window.SpeechRecognition = window.SpeechRecognition       ||
+	                           window.webkitSpeechRecognition ||
+	                           null;
+
+	if (window.SpeechRecognition === null) {
+		// not support
+	} else {
+		var recognizer = new window.SpeechRecognition();
+
+		// language
+		recognizer.lang = 'en-US';
+
+		// Recogniser doesn't stop listening even if the user pauses
+        recognizer.continuous = true;
+
+        // Set if we need interim results
+        recognizer.interimResults = false;
+
+        // Start recognising
+        recognizer.onresult = function(event) {
+
+          console.log( event );
+ 
+          for (var i = event.resultIndex; i < event.results.length; i++) {
+          	var trans = event.results[i][0].transcript;
+            var time = event.results[i][0].confidence;
+            if (event.results[i].isFinal) {
+            	console.log(trans.trim());
+            } else {
+                
+            }
+          }
+        };
+
+		try {
+			recognizer.start();
+			console.log('Recognition started');
+		} catch(ex) {
+			console.log( 'Recognition error: ' + ex.message );
+		}
+
+        // Listen for errors
+        recognizer.onerror = function(event) {
+          console.log( 'Recognition error: ' + event.message );
+        };
+	}
+</script>
+
+</head>
+
+<body>
+    
+</body>
+</html>

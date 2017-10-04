@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Test</title>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+     function btn_speak() {
+      var text = document.getElementById("text");
+
+      var recognition = new webkitSpeechRecognition();
+      var u = new SpeechSynthesisUtterance();
+      u.text = text.value;
+      u.lang = 'en-US';
+      u.rate = 1.2;
+      u.volume = 1;
+      u.onend = function(event) { console.log('Finished in ' + event.elapsedTime + ' seconds.'); }
+      speechSynthesis.speak( u );
+
+      console.log(u);
+     }
+    </script>
+
+    <input type="text" id="text"> <button id="btn-speak" onclick="btn_speak();">Speak</button>
+
+  </body>
+</html>
