@@ -1,9 +1,11 @@
-<?  
+<?
     // inculde connect.php
     include("config/connect.php");
 
     // lib functions php
     include("php/lib_func.php");
+
+    date_default_timezone_set("Asia/Bangkok"); // set timezone
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -17,7 +19,8 @@
 <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js/iamdict.js?v=1.1"></script>
 <script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
-<script type="text/javascript" src="js/chart.js"></script>
+<!--<script type="text/javascript" src="js/chart.js"></script>-->
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <!-- lib games -->
 <script type="text/javascript" src="js/lib_games/game.js"></script>
@@ -33,7 +36,7 @@
             margin: [-100, 0, 0, 0]
         });
 
-        <? 
+        <?
         // welcome popup
         if($_SESSION["welcome"]) {
         ?>
@@ -59,6 +62,8 @@
     });
 </script>
 
+</head>
+
 <body>
 
     <?
@@ -80,7 +85,7 @@
     ?>
 
     <input type="hidden" id="iamdict-user-info" data-user='{"user_id":"<?=$user_id;?>"}'>
-	
+
     <!-- no login -->
     <?
     if( !$user_id ) {
@@ -108,7 +113,7 @@
             <div class="login-form style-no-login">
                 <form action="login.php" method="post">
                     <input type="text" class="username style-input" name="username" placeholder="Username" required="required" value="<?=$_GET['username'];?>">
-                    <input type="password" class="password style-input" name="password" placeholder="Password" required="required"> 
+                    <input type="password" class="password style-input" name="password" placeholder="Password" required="required">
                     <input type="submit" class="submit" value="Log in">
                     <div class="footer">
                         <label><span>remember me</span> <input type="checkbox" class="checkbox" name="loggin" checked></label>
@@ -140,7 +145,7 @@
                         </select>
                         <select name="birthday_year">
                             <option value="">Year</option>
-                            <? 
+                            <?
                             $date = date("Y");
                             for($i=$date;$i>=1974;$i--) {
                             ?>
@@ -172,11 +177,11 @@
     $email    = $res[0]["email"];
 
     ?>
-    
+
     <!-- logged -->
 
     <div id="loading-display"><span>Loading...</span></div>
-    
+
     <div id="logged">
     	<header>
         	<div class="logo">
@@ -220,12 +225,12 @@
                 }
                 else
                 {
-                  $option_user.hide(); 
+                  $option_user.hide();
                   $btn_icon_option.css("background-position","-59px -197px");
                 }
             }
         </script>
-        
+
         <div id="wrapper">
         	<ul class="nav">
             	<li class="list feed" id="new_word">
@@ -248,8 +253,8 @@
                 	<i class="sprites"></i>
                     <span>View Chart</span>
                 </li>
-            </ul> 
-            
+            </ul>
+
              <ul class="lists-result" id="mydict-result-home" style="display: none;"></ul>
         </div>
     </div>
@@ -264,7 +269,7 @@
         <div>IamDict &copy; <?=date("Y");?> created by <a href="https://twitter.com/_CHAI__" target="_blank">Apichai Densamut</a></div>
     </footer>
 
-    
+
     <!-- add -->
     <div id="add-page" class="popup-page-common scale add-page">
     	<div class="header-bar">
@@ -282,7 +287,7 @@
         	<div class="main"><!-- load html --></div>
         </div>
     </div>
-    
+
     <!-- dict -->
     <div id="dict-page" class="popup-page-common scale">
     	<div class="header-bar">
@@ -307,7 +312,7 @@
                 </ul>
             </div>
         </div>
-        
+
         <ul class="sorting-char">
             <li onClick="scrollTo_ChatAt( this, 'a' );" class="active">a</li>
             <li onClick="scrollTo_ChatAt( this, 'b' );">b</li>
@@ -344,11 +349,11 @@
 			this.scrollTop = 0;
 		}
 		var storage_scroll_dict = new Storage_scroll_dict();
-		
+
 		function reset_storage_scroll_dict() {
 			storage_scroll_dict.scrollTop = 0;
 		}
-	
+
 		// scrollTop of dict page
 		var $wrap = $('#dict-page');
 		var $el = $('#dict-page .header-bar');
@@ -356,68 +361,68 @@
 		var tmp = 0;
 		var result = 0;
 		var top_popupWordDetail = 0;
-		
+
         // event
 		$($wrap).scroll(function(){
-			
+
 			if(document.getElementById("popup-word-detail") != null) {
-				top_popupWordDetail = $("#popup-word-detail").offset().top; 
+				top_popupWordDetail = $("#popup-word-detail").offset().top;
 			}
-			
+
 			if( $(this).scrollTop() > tmp )
 			{
-				// down	
+				// down
 				var result = top_popupWordDetail - ($(this).scrollTop() - tmp);
 			}
 			else
 			{
-				// up	
+				// up
 				var result = (top_popupWordDetail + tmp) - $(this).scrollTop();
 			}
-			
+
 			$('#popup-word-detail').css({ top: result + 'px' });
-			
+
 			storage_scroll_dict.scrollTop = $(this).scrollTop();
-			
+
 			tmp = $(this).scrollTop();
-			
+
 			if( $(this).scrollTop()) {
-				$el.css({ position: "absolute", top: $(this).scrollTop() + "px", left: "0px", width: w + "px" });	
+				$el.css({ position: "absolute", top: $(this).scrollTop() + "px", left: "0px", width: w + "px" });
 			} else {
-				$el.css({ position: "absolute", top: "0px", left: "0px", width: w + "px" });		
+				$el.css({ position: "absolute", top: "0px", left: "0px", width: w + "px" });
 			}
 		});
 
         $($wrap).scroll(function(){
-        
+
             if( $(this).scrollTop() > 0 ) {
-                
-                $(".sorting-char").css({ top: $(this).scrollTop() + 80 + "px" });   
+
+                $(".sorting-char").css({ top: $(this).scrollTop() + 80 + "px" });
             } else {
-                $(".sorting-char").css({ top: "80px" });        
+                $(".sorting-char").css({ top: "80px" });
             }
         });
-		
+
 		function getScrollbarWidth() {
 			var outer = document.createElement("div");
 			outer.style.visibility = "hidden";
 			outer.style.width = "100px";
 			document.body.appendChild(outer);
-			
+
 			var widthNoScroll = outer.offsetWidth;
 			// force scrollbars
 			outer.style.overflow = "scroll";
-			
+
 			// add innerdiv
 			var inner = document.createElement("div");
 			inner.style.width = "100%";
-			outer.appendChild(inner);        
-			
+			outer.appendChild(inner);
+
 			var widthWithScroll = inner.offsetWidth;
-			
+
 			// remove divs
 			outer.parentNode.removeChild(outer);
-			
+
 			return widthNoScroll - widthWithScroll;
 		}
     </script>
@@ -449,7 +454,7 @@
                     <button class="btn-continue sprites" title="Continue">Continue</button>
                 </div>
             </div>
-            
+
             <!-- game writing -->
             <div class="game-play game-writing" style="display: none;">
                 <div class="status-header"><span class="min">1</span> Of <span class="max">25</span></div>
@@ -471,7 +476,7 @@
                 <div class="word">แสดงความยินดี</div>
                 <div class="main-outer">
                 	<div class="main-inner">
-                    	<i onClick="new GameSpeaking().startMic( event );" class="sprites icon-speaking"></i> 
+                    	<i onClick="new GameSpeaking().startMic( event );" class="sprites icon-speaking"></i>
                         <div class="display">
                         	<i class="sprites icon-speak-now"></i>
                             <div class="message">
@@ -487,7 +492,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- game listening -->
             <div class="game-listening" style="display: none;">
                 <div class="status-header"><span class="min">1</span> Of <span class="max">25</span></div>
@@ -509,7 +514,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="menu" style="display: block;">
             	<strong>Play Game</strong>
                 <ul class="list-game">
@@ -518,7 +523,7 @@
                     <li onClick="play_game('writing', this);" class="writing"><i class="sprites icon"></i> <span>Writing</span></li>
                 </ul>
             </div>
-            
+
             <div class="how-to-play" style="display: none;">
             	<div class="popup">
                 	<div class="header">How To Play ?</div>
@@ -564,7 +569,8 @@
         </div>
     </div>
     <script type="text/javascript">
-        google.load("visualization", "1", {packages:["corechart"]});
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(set_Chart);
     </script>
 
     <!-- popup display none -->
@@ -681,6 +687,6 @@
             }
         </script>
     </div>
-   
+
 </body>
 </html>

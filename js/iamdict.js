@@ -2,7 +2,7 @@
  *
  *  IamDict
  *  Author apichai_kub@hotmail.com
- *  Good luck my friend for hacking :) 
+ *  Good luck my friend for hacking :)
  *
  */
 
@@ -44,10 +44,10 @@ function clickClose_Page( element ) {
 
 // click to show page
 function clickPopup_Page( element, url ) {
-	
+
 	// element : element to show
 	// url : url to change
-	
+
 	$( element ).fadeIn(0).addClass("fadeIn");
 
     // event page
@@ -67,17 +67,17 @@ function clickPopup_Page( element, url ) {
             }
 
         break;
-        case '#chart-page': 
+        case '#chart-page':
             $.ajax({
                 url: 'api_chart.php?access=word_of_this_week',
                 dataType:"json",
                 async: false,
                 success: function( response ) {
-                    
+
                     set_Chart( new google.visualization.DataTable( response ) );
                 }
             });
-			
+
             setTimeout(function(){
                 var data = new google.visualization.DataTable(
                    {
@@ -90,7 +90,7 @@ function clickPopup_Page( element, url ) {
                            ]
                    }
                 )
-                //set_Chart( data );
+                set_Chart( data );
             },4000);
         break;
     }
@@ -98,20 +98,20 @@ function clickPopup_Page( element, url ) {
 
 // set url
 function setUrl( url ) {
-	//window.history.pushState(null, null, url);	
+	//window.history.pushState(null, null, url);
 }
 
 // click scroll to char
 function scrollTo_ChatAt( t, char ) {
-	
+
 	$('#dict-page').scrollTop(0);
-	
+
 	var el = '#mydict #charAt-' + char;
-	
+
 	$('#dict-page').animate({
 		scrollTop: $(el).offset().top - 70
 	}, 1000);
-	
+
 	// set active char on right
 	$("ul.sorting-char li").removeClass();
 	$(t).addClass("active");
@@ -134,7 +134,7 @@ function click_addField( field ) {
     } else {}
 
     var count = $( '.form .field .list' ).length;
-	
+
     var ref = 'input-ref_' + ( count + 1 );
 	var ref_class = "#" + ref;
 
@@ -148,17 +148,17 @@ function click_addField( field ) {
 
 // click remove input
 function click_remove_input ( element_str ) {
-	
+
 	if( $('.popup-word-detail').length == 0 ) {
-		
+
 	} else {
-		$('.popup-word-detail').attr("id","");	
+		$('.popup-word-detail').attr("id","");
 	}
-	
+
     $( element_str ).remove();
-	
+
 	setTimeout(function(){
-		$('.popup-word-detail').attr("id","popup-word-detail");	
+		$('.popup-word-detail').attr("id","popup-word-detail");
 	},100);
 }
 
@@ -183,7 +183,7 @@ function click_saveWord () {
     {
         // not save
     }
-    else 
+    else
     {
         saveWord( word, trans, sente );
     }
@@ -193,13 +193,13 @@ function click_editWord ( word_id ) {
 	var word = $('#input-of-word input.text').val().trim(); // String
     var trans = getData('translate'); // JSON
     var sente = getData('sentence'); // JSON
-	
+
 	if( ! check_from() )
     {
         // not save
 		console.log('failed');
     }
-    else 
+    else
     {
         editWord( word_id, word, trans, sente );
     }
@@ -214,11 +214,11 @@ function close_editWord() {
 
 // check data
 function check_from () {
-	
+
 	var word = $('#input-of-word input.text').val().trim(); // String
 	var trans = getData('translate'); // JSON
 	var sente = getData('sentence'); // JSON
-		
+
 	var r = true;
 	var focused = false;
 	var $word = $('#input-of-word');
@@ -243,7 +243,7 @@ function check_from () {
 		focus_element( $word.find('input.text') );
 		r = false;
 	}
-	else 
+	else
 	{
 		removeClass_wrong( $word.find('input.text') );
 		$word.find('.display-msg-wrong').hide();
@@ -309,19 +309,19 @@ function getData( field ) {
 
 // check word in dictionary
 function chkWord( This ) {
-	
+
 	var text = This.value.toLowerCase();
-	
+
 	$.ajax({
         type: 'POST',
         url: 'api.php?access=check_word&text='+text,
         data: {  },
         beforeSend: function() {
-            
+
         },
         success: function( res ) {
 			var data = JSON.parse(res);
-			
+
 			if( data.count_word == 0 )
 			{
 				$('#input-of-word').find('.display-msg-wrong').hide();
@@ -349,11 +349,11 @@ function saveWord ( word, translate, sentence ) {
         type: 'POST',
         url: 'api.php?access=save_word&data=' + JSON.stringify(data),
         success: function( response ) {
-	
+
             if( JSON.parse( response ).status_id == 0 )
             {
                 console.log( 'save word fialed' );
-            } 
+            }
             else
             {
                 // save success
@@ -373,7 +373,7 @@ function editWord ( word_id, word, translate, sentence ) {
         translate: translate,
         sentence: sentence
     };
-	
+
     $.ajax({
         type: 'POST',
         url: 'api.php?access=edit_word&data=' + JSON.stringify(data),
@@ -381,7 +381,7 @@ function editWord ( word_id, word, translate, sentence ) {
 			// refresh
 			get_Dict( user_info.data.user_id );
             get_newWord( user_info.data.user_id );
-			
+
 			// close popup
 			close_editWord();
         }
@@ -401,14 +401,14 @@ function get_Dict( user_id ) {
             url: 'api.php?access=my_dict&user_id=' + user_id,
             data: {  },
             beforeSend: function() {
-                
+
             },
             success: function( response ) {
                 var json = JSON.parse( response );
 
                 if( ! json.data )
                 {
-                    
+
                 }
                 else
                 {
@@ -423,7 +423,7 @@ function get_Dict( user_id ) {
                         var data = json.data[i];
 
                         var r = number_char( data ) - temp;
-                        
+
                         if( r == 0 )
                         {
                             print_char( temp );
@@ -441,7 +441,7 @@ function get_Dict( user_id ) {
                                 }
                                 else
                                 {
-                                   print_char( temp ); 
+                                   print_char( temp );
                                 }
                                 temp++;
                             }
@@ -469,13 +469,13 @@ function get_Dict( user_id ) {
             }
         });
     }
-	
+
     // lib function
     function print_word ( json_data ) {
-		
+
 		var json_string = JSON.stringify(json_data);
 			json_string = replace_singleCode( json_string );
-		
+
         var html = "";
             html += '<li class="word-info" data-json=\''+ json_string +'\' onClick="popup_wordInfo(this);">';
             html +=     '<span class="word">'+ json_data.word +'</span>';
@@ -519,7 +519,7 @@ function get_Dict( user_id ) {
     }
 
     function number_char ( json_data ) {
-        
+
         var word = json_data.word.toLowerCase();
         var number;
         var patt = new RegExp("^[a-zA-Z]+$");
@@ -583,14 +583,14 @@ function get_newWord( user_id ) {
             url: 'api.php?access=new_word&user_id=' + user_id,
             data: {  },
             beforeSend: function() {
-                
+
             },
             success: function( response ) {
                 var json = JSON.parse( response );
 
                 if( ! json.data )
                 {
-                    
+
                 }
                 else
                 {
@@ -688,7 +688,7 @@ function search ( t, page ) {
     {
         //console.log('found');
     }
-	
+
 	reset_storage_scroll_dict();
 }
 
@@ -700,7 +700,7 @@ function close_search( page ) {
         $('.nav').fadeIn();
         $('#mydict-result-home').hide();
         $('#search-word-home').val("");
-    } 
+    }
     else if ( page == 'dict' )
     {
         $('li.word-info').show();
@@ -714,7 +714,7 @@ function close_search( page ) {
 
 // popup word info
 function popup_wordInfo( event ) {
-	
+
 	var element_att = $(event)[0];
 	var left = element_att.offsetLeft + element_att.offsetWidth + 20;
 	var top = element_att.offsetTop - storage_scroll_dict.scrollTop;
@@ -754,7 +754,7 @@ function popup_wordInfo( event ) {
         html +=         '</ul>';
         html +=     '</div>';
         html += '</div>';
-		
+
 	$("body").append( html );
     //$("body").append('<div id="popup_" class="popup_" style="width= 100%; width: 100%; height: 100%; position: fixed;background: none; top: 0; left: 0;z-index: 1000;cursor: pointer;"></div>');
 }
@@ -767,7 +767,7 @@ function listen( text ) {
 	u.rate = 1.2;
 	u.volume = 1;
 	u.onend = function(event) {
-	
+
 	}
 	speechSynthesis.speak( u );
 }
@@ -801,20 +801,20 @@ function set_Chart( data ) {
 
 // onclick option word
 function click_optionWord ( This ) {
-	
+
 	$menu = $("#popup-word-detail .option .menu");
-	
+
 	if( $menu.css("display") == "none" )
 	{
 		$menu.css("display","block");
-		$(This).addClass("active");			
+		$(This).addClass("active");
 	}
 	else
 	{
 		$menu.css("display","none");
 		$(This).removeClass("active");
 	}
-	
+
 }
 
 // selected option
@@ -822,20 +822,20 @@ function selected_optWord ( This, action ) {
 
 	switch(action) {
 		case 'edit':
-			
+
 			// load template
 			$( '#popup-word-detail .wp-outer' ).load( "html/form_editword.html?v=1",function(){
 
 				// get json data
 				var data = $(This).attr("data-json");
 					data = JSON.parse(data);
-					
+
 				// set id on function
 				$(".edit-word .cancel").attr("onclick","close_editWord()");
 				$(".edit-word .save").attr("onclick","click_editWord('"+ data.word_id +"')");
-								
+
 				$("#input-of-word input.text").val( data.word );
-				
+
 				for( var i=0, count = $( '.form .field .list' ).length; i<data.translate.length; i++ ) {
 					if( i==0 ){
 						$("#input-of-translate input.text:first-child").val( data.translate[i] );
@@ -859,7 +859,7 @@ function selected_optWord ( This, action ) {
             var data = $(This).attr("data-json"),
                 data = JSON.parse(data),
                 word_id = data.word_id;
-			
+
 			var r = confirm("are you sure to delete this word ?");
 
             if(!r)
@@ -883,7 +883,7 @@ function selected_optWord ( This, action ) {
                     }
                 });
             }
-						
+
 		break;
 	}
 
@@ -931,13 +931,13 @@ function play_game( game, event ) {
 function click_view_chart( this_, access ) {
     var list = document.querySelectorAll("#select-view-chart li");
     var count = list.length;
-    
+
     for(var i=0; i<count; i++) {
         document.querySelectorAll("#select-view-chart li")[i].className = "";
     }
-    
+
     this_.setAttribute("class", "active");
-    
+
     $.ajax({
         url: 'api_chart.php?access=' + access,
         dataType:"json",
@@ -964,9 +964,9 @@ function checkInput_username ( username ) {
         data: { username: username },
         beforeSend: function()
         {
-            
+
         },
-        success: function( res ) 
+        success: function( res )
         {
             if( res == "true" )
             {
@@ -989,13 +989,13 @@ function checkForm_register () {
 
    var return_          = true;
    var username         = $("#register .username");
-   var email            = $("#register .email"); 
-   var password         = $("#register .password"); 
+   var email            = $("#register .email");
+   var password         = $("#register .password");
    var birthday         = $("#register .birthday");
    var birthday_day     = $("#register select[name='birthday_day']");
    var birthday_month   = $("#register select[name='birthday_month']");
    var birthday_year    = $("#register select[name='birthday_year']");
-   var gender           = $("#register .gender"); 
+   var gender           = $("#register .gender");
    var gender_checked   = $("#register input[name='gender']:checked");
    var sumbit           = $('#register input.submit');
 
@@ -1075,7 +1075,7 @@ function checkForm_register () {
     birthday_year.attr('disabled','disabled');
     gender.find('input[type="radio"]').attr('disabled','disabled');*/
    }
-   
+
 }
 
 // lib of form register
@@ -1121,11 +1121,11 @@ function clear_alert_wrong () {
 
 function replace_singleCode( str ) {
 	var r = str.indexOf("'");
-	
+
 	if( r >= 0 ) {
 		str = str.replace(/'/g,"&#39");
 	}
-	
+
 	return str;
 }
 
@@ -1164,21 +1164,21 @@ function rand_unsort ( min, max, count ) {
   var numbers = new Array();
   var status = true;
   var n;
-  
+
   while( status ){
-	  
+
 	n = rand( min, max );
-	
+
 	if( jQuery.inArray( n, numbers ) == -1 )
 	{
-	  numbers.push( n );		
+	  numbers.push( n );
 	}
-	
+
 	// end this line
 	if( numbers.length == count ) status = false;
-	
+
   } // end while
-  
+
   return numbers;
 }
 
@@ -1196,33 +1196,28 @@ function json_rand_sort( json ) {
 
 // close popup
 $(document).ready(function(){
-    
+
     $( document ).click(function( e ){
-		
+
 		function closePopup( element, callback ) {
-			
+
 			var el = $( element );
 			var r = $(e.target).parents('#popup-word-detail').length;
-			
+
 			if( !r ) {
-				
+
 				el.hide();
-				
+
 				if(callback != undefined) {
 					callback();
 				}
-			}	
+			}
 		}
-		
-		// close popup image -----------------------------------------	
+
+		// close popup image -----------------------------------------
 		closePopup( '#popup-word-detail', function(){
             $('.word-info').removeClass("active");
 		});
-            
+
     });
 });
-
-
-
-
-

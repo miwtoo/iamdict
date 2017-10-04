@@ -15,16 +15,16 @@
 		private $db_user = "iamdictc_db";
 		private $db_pass = "xfiQpD4e";
 		private $db_name = "iamdictc_db";*/
-		
+
 		private $con = false;
 		private $result = array();
-		
+
 		public function connect ()
 		{
 			$condb = mysql_connect($this->db_host, $this->db_user, $this->db_pass);
 			$seldb = mysql_select_db($this->db_name);
 			mysql_query("SET NAMES UTF8");
-			
+
 			if($condb)
 			{
 				$this->con = true;
@@ -32,12 +32,12 @@
 			}
 			else
 			{
-				return false;	
+				return false;
 			}
 		}
-		
+
 		public function select ( $sql )
-		{	
+		{
 			$query = mysql_query($sql);
 			// $this->myQuery = $sql; // Pass back the SQL
 			if($query)
@@ -65,8 +65,8 @@
 				return false; // No rows where returned
 			}
 		}
-		
-		public function insert ( $sql ) 
+
+		public function insert ( $sql )
 		{
 			$query = mysql_query( $sql );
 			if($query)
@@ -78,32 +78,33 @@
 				return false;
 			}
 		}
-		
+
 		public function query($sql)
 		{
 			if($query = mysql_query($sql)){
 				array_push($this->result,mysql_affected_rows());
-				return true; 
+				return true;
 			}else{
 				array_push($this->result,mysql_error());
-				return false; 
+				return false;
 			}
 		}
-		
-		public function getResult () 
+
+		public function getResult ()
 		{
 			$val = $this->result;
 			$this->result = array();
 			return $val;
 		}
 	}
-	
+
 	// database
 	$db = new Database();
 	$db -> connect();
 
 	// public variables
-    $user_id = 1;
+    //$user_id = 1;
+		$user_id;
 
     // set $user_id variavle is public
     if ( isset($_COOKIE["user_id"]) )

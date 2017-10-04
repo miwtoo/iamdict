@@ -5,6 +5,7 @@
 	 *  Author apichai_kub@hotmail.com
 	 *
 	 */
+	 	date_default_timezone_set("Asia/Bangkok"); // set timezone
 
 	function update_string( $string ) {
 		$string = trim($string);
